@@ -3,9 +3,11 @@ import "kaplay/global";
 
 // 初始化游戏
 kaplay({
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
   background: [20, 20, 50], // 深蓝色夜空
+  stretch: true,
+  letterbox: false,
 });
 
 // ==========================================
@@ -16,7 +18,7 @@ kaplay({
 // 创建玩家（篮子）
 const player = add([
   rect(100, 20),
-  pos(400, 560),
+  pos(width() / 2, height() - 40),
   anchor("center"),
   color(255, 200, 100),
   area(),
@@ -36,7 +38,7 @@ const scoreText = add([
 // 显示提示
 add([
   text("← → 移动篮子", { size: 18 }),
-  pos(20, 560),
+  pos(20, height() - 40),
   color(150, 150, 150),
 ]);
 
@@ -53,7 +55,7 @@ onKeyDown("left", () => {
 onKeyDown("right", () => {
   player.pos.x += PLAYER_SPEED * dt();
   // 限制不能移出屏幕
-  if (player.pos.x > 750) player.pos.x = 750;
+  if (player.pos.x > width() - 50) player.pos.x = width() - 50;
 });
 
 // 也支持 A/D 键
@@ -64,15 +66,15 @@ onKeyDown("a", () => {
 
 onKeyDown("d", () => {
   player.pos.x += PLAYER_SPEED * dt();
-  if (player.pos.x > 750) player.pos.x = 750;
+  if (player.pos.x > width() - 50) player.pos.x = width() - 50;
 });
 
 // 每隔一段时间生成星星
 loop(0.8, () => {
   // 随机位置生成星星
-  const star = add([
+  add([
     text("⭐", { size: 36 }),
-    pos(rand(50, 750), -20),
+    pos(rand(50, width() - 50), -20),
     anchor("center"),
     area({ scale: 0.8 }),
     move(DOWN, rand(150, 280)), // 随机速度向下移动
@@ -85,7 +87,7 @@ loop(0.8, () => {
 loop(3, () => {
   add([
     text("🌟", { size: 48 }),
-    pos(rand(50, 750), -20),
+    pos(rand(50, width() - 50), -20),
     anchor("center"),
     area({ scale: 0.8 }),
     move(DOWN, rand(100, 180)),
@@ -104,11 +106,12 @@ onCollide("player", "star", (_, star) => {
   shake(3);
 
   // 显示 +1 文字飘起
-  const plusOne = add([
+  add([
     text("+1", { size: 20 }),
     pos(star.pos),
     anchor("center"),
     color(255, 255, 100),
+    opacity(1),
     lifespan(0.5, { fade: 0.3 }),
     move(UP, 80),
   ]);
@@ -128,16 +131,17 @@ onCollide("player", "bigstar", (_, star) => {
     pos(star.pos),
     anchor("center"),
     color(255, 200, 50),
+    opacity(1),
     lifespan(0.8, { fade: 0.4 }),
     move(UP, 100),
   ]);
 });
 
 // 添加一些背景星星装饰
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 50; i++) {
   add([
     text("·", { size: rand(8, 16) }),
-    pos(rand(0, 800), rand(0, 500)),
+    pos(rand(0, width()), rand(0, height() - 100)),
     color(100, 100, 150),
     opacity(rand(0.3, 0.8)),
   ]);
