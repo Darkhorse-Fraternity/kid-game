@@ -3,7 +3,9 @@
     "allow": [
       "Bash(bun install:*)",
       "Bash(cat:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm install)"
     ]
   }
 }

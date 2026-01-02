@@ -4,9 +4,13 @@ import { Building } from './Building';
 export class City {
   buildings: Building[] = [];
   group: THREE.Group;
+  offsetX: number;
+  offsetZ: number;
 
-  constructor() {
+  constructor(offsetX = 0, offsetZ = 0) {
     this.group = new THREE.Group();
+    this.offsetX = offsetX;
+    this.offsetZ = offsetZ;
     this.generate();
   }
 
@@ -36,8 +40,8 @@ export class City {
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
         if (Math.random() > 0.02) {
-          const x = i * spacing - offset + (Math.random() - 0.5) * 2;
-          const z = j * spacing - offset + (Math.random() - 0.5) * 2;
+          const x = i * spacing - offset + (Math.random() - 0.5) * 2 + this.offsetX;
+          const z = j * spacing - offset + (Math.random() - 0.5) * 2 + this.offsetZ;
 
           const width = 2 + Math.random() * 3;
           const depth = 2 + Math.random() * 3;

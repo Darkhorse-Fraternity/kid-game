@@ -14,7 +14,9 @@ export class Airplane {
     up: false,
     down: false,
     left: false,
-    right: false
+    right: false,
+    accelerate: false,
+    brake: false
   };
 
   constructor() {
@@ -87,6 +89,12 @@ export class Airplane {
       case 'ArrowRight':
         this.keys.right = true;
         break;
+      case 'KeyA':
+        this.keys.accelerate = true;
+        break;
+      case 'KeyB':
+        this.keys.brake = true;
+        break;
     }
   }
 
@@ -104,12 +112,28 @@ export class Airplane {
       case 'ArrowRight':
         this.keys.right = false;
         break;
+      case 'KeyA':
+        this.keys.accelerate = false;
+        break;
+      case 'KeyB':
+        this.keys.brake = false;
+        break;
     }
   }
 
   update(deltaTime: number): void {
     const turnSpeed = 1.5;
     const pitchSpeed = 1.0;
+    const minSpeed = 10;
+    const maxSpeed = 60;
+
+    // A键加速，B键减速
+    if (this.keys.accelerate) {
+      this.speed = Math.min(this.speed + 20 * deltaTime, maxSpeed);
+    }
+    if (this.keys.brake) {
+      this.speed = Math.max(this.speed - 30 * deltaTime, minSpeed);
+    }
 
     // 左右转向
     if (this.keys.left) {
