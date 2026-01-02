@@ -1,0 +1,22 @@
+{
+  "name": "game-learn",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "games/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --cwd apps/portal dev",
+    "dev:game": "bun run --filter",
+    "new": "bash -c 'cp -r packages/game-template games/$0 && cd games/$0 && sed -i \"\" \"s/game-template/$0/g\" package.json && echo \"Created games/$0\"'",
+    "build": "bun run --filter '*' build",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0"
+  }
+}
