@@ -155,6 +155,8 @@ function jump() {
     bird.gravityScale = 1;
     // 开始生成管道
     loop(1.5, spawnPipes);
+    // 第一次点击只开始游戏，不跳跃
+    return;
   }
 
   bird.jump(JUMP_FORCE);

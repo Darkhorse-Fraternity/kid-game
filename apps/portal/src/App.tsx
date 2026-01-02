@@ -23,6 +23,15 @@ const games: GameInfo[] = [
     color: "#48dbfb",
     port: 3002,
   },
+  {
+    id: "city-bomber",
+    title: "城市轰炸机",
+    description: "驾驶飞机在城市上空飞行，按空格投弹摧毁建筑！",
+    emoji: "✈️",
+    difficulty: "⭐⭐",
+    color: "#ff6b6b",
+    port: 3003,
+  },
 ];
 
 export default function App() {
